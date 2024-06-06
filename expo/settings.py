@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-7n534)bsd^!t1gwx@i6lxk*6vit&488!jr^^ka&1-+49im$9#v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['expokelompok3.azurewebsites.net']
+ALLOWED_HOSTS = ['satisfaction-beval-d315e1f3.koyeb.app']
 
 CSRF_COOKIE_SECURE = True
 
@@ -91,14 +91,14 @@ WSGI_APPLICATION = 'expo.wsgi.application'
 #     }
 # }
 
-DATABASES = {
+DDATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kelompok3expo',
-        'USER': 'beval',
-        'PASSWORD': 'Kelompok3expo',
-        'HOST': 'kelompok3expo.mysql.database.azure.com',   
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'koyebdb',
+        'USER': 'koyeb-adm',
+        'PASSWORD': 'lDA5cnrfqZ2b',
+        'HOST': 'ep-icy-frost-a4y4miwx.us-east-1.pg.koyeb.app',
+        'OPTIONS': {'sslmode': 'require'},
     }
 }
 
