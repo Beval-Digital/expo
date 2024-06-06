@@ -19,3 +19,4 @@ scipy
 cython
 scikit-learn==1.2.2
 pillow
+whitenoise
