@@ -58,7 +58,11 @@ def logout_view(request):
     return redirect('/')
     
 @login_required
+@require_http_methods(["GET", "POST"])
 def index(request):
+    if request.method == 'POST':
+        pass
+
     category_count = Category.objects.count()
     product_count = Product.objects.count()
     customer_count = Customer.objects.count()
