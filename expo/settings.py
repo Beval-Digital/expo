@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-7n534)bsd^!t1gwx@i6lxk*6vit&488!jr^^ka&1-+49im$9#v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = [*]
 
 CSRF_COOKIE_SECURE = True
 
