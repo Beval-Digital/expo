@@ -12,21 +12,6 @@ import numpy as np
 from django.http import HttpResponse
 from sklearn.preprocessing import LabelEncoder
 
-@login_required
-def index(request):
-    category_count = Category.objects.count()
-    product_count = Product.objects.count()
-    customer_count = Customer.objects.count()
-    order_count = Order.objects.count()
-
-    data = {
-        'category_count': category_count,
-        'product_count': product_count,
-        'customer_count': customer_count,
-        'order_count': order_count,
-    }
-    return render(request, 'index.html', data)
-
 def register(request):
     if request.method == "POST":
         form = UserRegistry(request.POST)
@@ -71,6 +56,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/')
+    
+@login_required
+def index(request):
+    category_count = Category.objects.count()
+    product_count = Product.objects.count()
+    customer_count = Customer.objects.count()
+    order_count = Order.objects.count()
+
+    data = {
+        'category_count': category_count,
+        'product_count': product_count,
+        'customer_count': customer_count,
+        'order_count': order_count,
+    }
+    return render(request, 'index.html', data)
 
 @login_required
 def user(request):
