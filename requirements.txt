@@ -20,3 +20,4 @@ cython
 scikit-learn==1.2.2
 pillow
 whitenoise
+psycopg2-binary
