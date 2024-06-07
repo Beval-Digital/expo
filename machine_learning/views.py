@@ -12,53 +12,7 @@ import os
 import numpy as np
 from django.http import HttpResponse
 from sklearn.preprocessing import LabelEncoder
-
-def register(request):
-    if request.method == "POST":
-        form = UserRegistry(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Account created successfully. You can now log in.")
-            return redirect("login")
-    else:
-        form = UserRegistry()
-    context = {"register": "Register", "form": form}
-    return render(request, "user/register.html", context)
-
-def anonymous_required(function=None, redirect_url=None):
-    def _decorator(view_func):
-        def _view(request, *args, **kwargs):
-            if request.user.is_authenticated:
-                return redirect(redirect_url if redirect_url else '/')
-            else:
-                return view_func(request, *args, **kwargs)
-        return _view
-    if function:
-        return _decorator(function)
-    return _decorator
-
-@anonymous_required(redirect_url='/')
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, "You have successfully logged in.")
-            return redirect('/')
-        else:
-            messages.error(request, "Invalid username or password.")
-            form = AuthenticationForm()
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
-
-def logout_view(request):
-    logout(request)
-    return redirect('/')
     
-@login_required
 @require_http_methods(["GET", "POST"])
 def index(request):
     if request.method == 'POST':
@@ -77,12 +31,10 @@ def index(request):
     }
     return render(request, 'index.html', data)
 
-@login_required
 def user(request):
     context = {"profile": "User Profile"}
     return render(request, "user/user.html", context)
 
-@login_required
 def category_index(request):
     hasil = Category.objects.all()
     data = {
@@ -90,7 +42,6 @@ def category_index(request):
     }   
     return render(request, 'category/index.html', data)
 
-@login_required
 def category_create(request):
     submitted = False
     if request.method == 'POST':
@@ -108,7 +59,6 @@ def category_create(request):
 
     return render(request, 'category/create.html', {'form' : form, 'submitted' : submitted})
 
-@login_required
 def category_edit(request, code):
     category = Category.objects.get(code=code)
     if request.method == 'POST':
@@ -122,7 +72,6 @@ def category_edit(request, code):
     
     return render(request, 'category/edit.html', {'form' : form})
 
-@login_required
 def category_detail(request, code):
     category = Category.objects.get(code=code)
     # products = Product.objects.get(code=code).product_set.all()
@@ -130,14 +79,12 @@ def category_detail(request, code):
     print(products, "productssssssssssss")
     return render(request, 'category/detail.html', {'category' : category, 'products' : products})
 
-@login_required
 def category_delete(request, code):
     dt = Category.objects.get(code=code)
     dt.delete()
     messages.success(request, 'Data berhasil dihapus')
     return redirect("/category/")
 
-@login_required
 def product_index(request):
     hasil = Product.objects.all()
     data = {
@@ -145,7 +92,6 @@ def product_index(request):
     }   
     return render(request, 'product/index.html', data)
 
-@login_required
 def product_create(request):
     submitted = False
     if request.method == 'POST':
@@ -163,7 +109,6 @@ def product_create(request):
 
     return render(request, 'product/create.html', {'form' : form, 'submitted' : submitted})
 
-@login_required
 def product_edit(request, code):
     product = Product.objects.get(code=code)
     if request.method == 'POST':
@@ -177,14 +122,12 @@ def product_edit(request, code):
     
     return render(request, 'product/edit.html', {'form' : form})
 
-@login_required
 def product_delete(request, code):
     dt = Product.objects.get(code=code)
     dt.delete()
     messages.success(request, 'Data berhasil dihapus')
     return redirect("/product/")
 
-@login_required
 def customer_index(request):
     hasil = Customer.objects.all()
     data = {
@@ -192,7 +135,6 @@ def customer_index(request):
     }   
     return render(request, 'customer/index.html', data)
 
-@login_required
 def customer_create(request):
     submitted = False
     if request.method == 'POST':
@@ -210,7 +152,6 @@ def customer_create(request):
 
     return render(request, 'customer/create.html', {'form' : form, 'submitted' : submitted})
 
-@login_required
 def customer_edit(request, id):
     customer = Customer.objects.get(id=id)
     if request.method == 'POST':
@@ -224,7 +165,6 @@ def customer_edit(request, id):
     
     return render(request, 'customer/edit.html', {'form' : form})
 
-@login_required
 def customer_delete(request, id):
     dt = Customer.objects.get(id=id)
     dt.delete()
@@ -232,7 +172,7 @@ def customer_delete(request, id):
     return redirect("/customer/")
 
 
-# @login_required
+#
 # def warehouse_index(request):
 #     hasil = Warehouse.objects.all()
 #     data = {
@@ -240,7 +180,7 @@ def customer_delete(request, id):
 #     }   
 #     return render(request, 'warehouse/index.html', data)
 
-# @login_required
+#
 # def warehouse_create(request):
 #     if request.method == 'POST':
 #         form = WarehouseForm(request.POST)
@@ -252,7 +192,7 @@ def customer_delete(request, id):
 #         form = WarehouseForm()
 #     return render(request, 'warehouse/create.html', {'form': form})
 
-# @login_required
+#
 # def warehouse_edit(request, name):
 #     warehouse = Warehouse.objects.get(name=name)
 #     if request.method == 'POST':
@@ -265,14 +205,13 @@ def customer_delete(request, id):
 #         form = WarehouseForm(instance=warehouse)
 #     return render(request, 'warehouse/edit.html', {'form': form})
 
-# @login_required
+#
 # def warehouse_delete(request, id):
 #     warehouse = Warehouse.objects.get(id=id)
 #     warehouse.delete()
 #     messages.success(request, 'Warehouse deleted successfully.')
 #     return redirect("/warehouse/")
 
-@login_required
 def order_index(request):
     hasil = Order.objects.all()
     data = {
@@ -280,7 +219,6 @@ def order_index(request):
     }   
     return render(request, 'order/index.html', data)
 
-@login_required
 def order_create(request):
     orders = Order.objects.all()
     if request.method == "POST":
@@ -386,7 +324,6 @@ def make_prediction(instance):
 
     instance.save()
 
-@login_required
 def order_edit(request, order_id):
     with transaction.atomic():
         order = get_object_or_404(Order, pk=order_id)
@@ -422,7 +359,6 @@ def order_edit(request, order_id):
             form = OrderForm(instance=order)
     return render(request, 'order/edit.html', {'form': form})
 
-@login_required
 def order_delete(request, order_id):
     order = Order.objects.get(id=order_id)
     order.delete()

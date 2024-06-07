@@ -17,11 +17,7 @@
   </head>
   <body style="background-color: #FAFBFF; font-family: 'Poppins', sans-serif; padding-left:36px;padding-right:36px">
     
-    {% if user.is_authenticated %}
       {% include 'navbar.html' %}
-      {% else %}
-      {% include 'navbarLogin.html' %}
-    {% endif %}
     <br />
     <div style="margin-left:306px;">
     {% block content %}
