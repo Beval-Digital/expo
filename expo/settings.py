@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'expo.wsgi.application'
 #     }
 # }
 
-DDATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'koyebdb',
