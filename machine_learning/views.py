@@ -69,12 +69,44 @@ def index(request):
     customer_count = Customer.objects.count()
     order_count = Order.objects.count()
 
+    # satisfaction average
+    order_data = Order.objects.all()
+    satisfaction_order = [order.prediction for order in order_data]
+    satisfaction_avg = np.mean(satisfaction_order)
+    # rounding
+    satisfaction_avg = round(satisfaction_avg, 1)
+    satisfaction = ""
+
+    recent_order = Order.objects.all().order_by('date')
+    top_5_orders = recent_order[:7]
+
+    all_orders = Order.objects.all()
+    most_satisfied_customer = max(all_orders, key=lambda x: x.prediction)
+    most_satisfied_customer = most_satisfied_customer.customer
+    
+    print(most_satisfied_customer, "most_satisfied_customer")
+
+
+    if satisfaction_avg <= 3:
+        satisfaction = "Not Satisfied"
+    elif 4 <= satisfaction_avg <= 6:
+        satisfaction = "Quite Satisfied"
+    elif 7 <= satisfaction_avg <= 8:
+        satisfaction = "Satisfied"
+    else:  # 9 <= prediction <= 10
+        satisfaction = "Very Satisfied"
+
     data = {
         'category_count': category_count,
         'product_count': product_count,
         'customer_count': customer_count,
         'order_count': order_count,
+        'satisfaction_avg': satisfaction_avg,
+        'satisfaction': satisfaction,
+        'top_5_orders': top_5_orders,
+        'most_satisfied_customer': most_satisfied_customer,
     }
+    print(data)
     return render(request, 'index.html', data)
 
 @login_required

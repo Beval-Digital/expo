@@ -1,13 +1,13 @@
 {% extends 'base.html' %} {% block content%}
-<h1>Dashboard</h1>
+<h1 style="margin-bottom: 53px">Dashboard</h1>
 
 {% for message in messages %}
 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
 {% endfor %}
 
-<div class="row">
+<div class="row" style="width: 100%">
   <div class="col">
-    <div class="card" style="width: 22rem">
+    <div class="card" style="width: 21rem">
       <div class="card-header" style="background-color: #6910a8">
         <div class="d-flex justify-content-between align-items-center">
           <div>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="col">
-    <div class="card" style="width: 22rem">
+    <div class="card" style="width: 21rem">
       <div class="card-header" style="background-color: #8c07dd">
         <div class="d-flex justify-content-between align-items-center">
           <div>
@@ -87,7 +87,7 @@
   </div>
 
   <div class="col">
-    <div class="card" style="width: 22rem">
+    <div class="card" style="width: 21rem">
       <div class="card-header" style="background-color: #9f21e3">
         <div class="d-flex justify-content-between align-items-center">
           <div>
@@ -129,7 +129,7 @@
   </div>
 
   <div class="col">
-    <div class="card" style="width: 22rem">
+    <div class="card" style="width: 21rem">
       <div class="card-header" style="background-color: #b333e9">
         <div class="d-flex justify-content-between align-items-center">
           <div>
@@ -169,4 +169,121 @@
   </div>
 </div>
 
-{% endblock %}
+<div>
+  <div
+    class="card mt-5"
+    style="
+      width: 100%;
+      border: none;
+      {% comment %} box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); {% endcomment %}
+      border-radius: 24px;
+    "
+  >
+    <div
+      class="card-header"
+      style="
+        background-color: #ffffff;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+      "
+    >
+      <div class="d-flex align-items-center" style="width: 50%">
+        <div
+          style="
+            background-color: #5932ea;
+            border-radius: 100%;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 16px;
+          "
+        >
+          <span style="font-size: 24px; color: #ffffff"
+            >{{ satisfaction_avg }}</span
+          >
+        </div>
+        <div>
+          <p
+            class="card-title"
+            style="color: #5932ea; font-size: 14px; opacity: 0.9"
+          >
+            Satisfaction Level :
+          </p>
+          <h3
+            class="card-text"
+            style="color: #5932ea; font-size: 30px; margin-top: -8px"
+          >
+            {{ satisfaction }}
+          </h3>
+        </div>
+      </div>
+      <div
+        style="
+          padding-top: 32px;
+          padding-bottom: 8px;
+          width: 1px;
+          height: 100%;
+          background-color: #000000;
+          opacity: 0.2;
+          margin-right: 16px;
+        "
+      >
+        <span style="opacity: 0; height: 100%">|</span>
+      </div>
+      <div class="d-flex align-items-center" style="width: 50%">
+        {% comment %} Most satisfied {% endcomment %}
+        <div>
+          <p
+            class="card-title"
+            style="color: #5932ea; font-size: 14px; opacity: 0.9"
+          >
+            Most Satisfied Customer :
+          </p>
+          <h3
+            class="card-text"
+            style="color: #5932ea; font-size: 30px; margin-top: -8px"
+          >
+            {{ most_satisfied_customer }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border: none; border-radius: 24px; margin-top: 16px">
+  <div style="margin-top: 16px; padding: 16px">
+      {% comment %} Recent Order {% endcomment %}
+      <h3 style="color: #5932ea">Recent Orders</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Payment Type</th>
+            <th>Satisfaction</th>
+        </thead>
+        <tbody>
+          {% for order in top_5_orders %}
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer }}</td>
+            <td>{{ order.product }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.payment_type }}</td>
+            <td>{{ order.satisfaction }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        
+    </div>
+    </div>
+
+    {% endblock %}
+  </div>
+</div>

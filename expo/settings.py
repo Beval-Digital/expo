@@ -26,11 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7n534)bsd^!t1gwx@i6lxk*6vit&488!jr^^ka&1-+49im$9#v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://satisfaction-beval-d315e1f3.koyeb.app']
+# CSRF_TRUSTED_ORIGINS = ['https://satisfaction-beval-d315e1f3.koyeb.app']
+CSRF_COOKIE_SECURE = True
+
 
 # Application definition
 
@@ -91,14 +93,24 @@ WSGI_APPLICATION = 'expo.wsgi.application'
 #     }
 # }
 
-DDATABASES = {
+# DDATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'expo',
+#         'USER': 'koyeb-adm',
+#         'PASSWORD': 'lDA5cnrfqZ2b',
+#         'HOST': 'ep-icy-frost-a4y4miwx.us-east-1.pg.koyeb.app',
+#         'OPTIONS': {'sslmode': 'require'},
+#     }
+# }
+DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'koyebdb',
-        'USER': 'koyeb-adm',
-        'PASSWORD': 'lDA5cnrfqZ2b',
-        'HOST': 'ep-icy-frost-a4y4miwx.us-east-1.pg.koyeb.app',
-        'OPTIONS': {'sslmode': 'require'},
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'expo',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

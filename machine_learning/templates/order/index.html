@@ -9,7 +9,9 @@
 >
 <br />
 {% for message in messages %}
-<div class="alert alert-{{ message.tags }}" style="margin-top: 20px;">{{ message }}</div>
+<div class="alert alert-{{ message.tags }}" style="margin-top: 20px">
+  {{ message }}
+</div>
 {% endfor %}
 <br />
 <table
@@ -35,8 +37,8 @@
       <th>Satisfaction</th>
       <th>Action</th>
     </tr>
-</thead>
-<tbody>
+  </thead>
+  <tbody>
     {% for order in data %}
     <tr>
       <td>{{order.id}}</td>
@@ -54,6 +56,7 @@
       <td>{{order.payment_type}}</td>
       <td>{{order.satisfaction}}</td>
       <td>
+        {% comment %}
         <button
           type="button"
           class="btn btn-outline-warning"
@@ -61,6 +64,7 @@
         >
           <i class="fa-solid fa-pencil"></i>
         </button>
+        {% endcomment %}
         <a
           type="button"
           class="btn btn-outline-danger"
